@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -72,15 +72,15 @@ void ms_delay_int_count(volatile unsigned int nTime) {
 		;
 }
 int main(int argc, char* argv[]) {
-	RCC->AHB1ENR = 0x00000005; //GPIOC¿¡ RCC clock °ø±Þ
-	GPIOC->MODER = 0x00000550; //GPIOC(2)¸¦ general purpose output mode·Î
+	RCC->AHB1ENR = 0x00000005; //GPIOCì— RCC clock ê³µê¸‰
+	GPIOC->MODER = 0x00000550; //GPIOC(2)ë¥¼ general purpose output modeë¡œ
 //	GPIOC->MODER = 0x00000010;
-	GPIOC->OTYPER = 0; //GPIOC(2)´Â ¸ðµÎ output push-pull
+	GPIOC->OTYPER = 0; //GPIOC(2)ëŠ” ëª¨ë‘ output push-pull
 	GPIOC->PUPDR = 0;
 	GPIOC->OSPEEDR = 0;
 
-	GPIOA->MODER = 0xA8000050; //GPIOC(2)¸¦ general purpose output mode·Î
-	GPIOA->OTYPER = 0; //GPIOC(2)´Â ¸ðµÎ output push-pull
+	GPIOA->MODER = 0xA8000050; //GPIOC(2)ë¥¼ general purpose output modeë¡œ
+	GPIOA->OTYPER = 0; //GPIOC(2)ëŠ” ëª¨ë‘ output push-pull
 	GPIOA->PUPDR = 0;
 	GPIOA->OSPEEDR = 0;
 	// Send a greeting to the trace device (skipped on Release).
