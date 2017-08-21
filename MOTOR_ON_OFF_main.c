@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the Ã‚ÂµOS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -76,10 +76,10 @@ int main(int argc, char* argv[]) {
 	GPIOA->MODER = 0xA8001000;
 	GPIOB->MODER = 0x0005280;
 
-	GPIOB->OTYPER = 0; //GPIOC(2)´Â ¸ðµÎ output push-pull
+	GPIOB->OTYPER = 0; //GPIOC(2)Â´Ã‚ Â¸Ã°ÂµÃŽ output push-pull
 	GPIOB->PUPDR = 0;
 	GPIOB->OSPEEDR = 0;
-	GPIOA->OTYPER = 0; //GPIOC(2)´Â ¸ðµÎ output push-pull
+	GPIOA->OTYPER = 0; //GPIOC(2)Â´Ã‚ Â¸Ã°ÂµÃŽ output push-pull
 	GPIOA->PUPDR = 0;
 	GPIOA->OSPEEDR = 0;
 	// At this stage the system clock should have already been configured
