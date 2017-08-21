@@ -26,7 +26,6 @@
  */
 
 // ----------------------------------------------------------------------------
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "diag/Trace.h"
@@ -57,7 +56,18 @@
 // Keep the LED on for 2/3 of a second.
 #define BLINK_ON_TICKS  (TIMER_FREQUENCY_HZ * 3 / 4)
 #define BLINK_OFF_TICKS (TIMER_FREQUENCY_HZ - BLINK_ON_TICKS)
+#define RCC_AHB1ENR (*(volatile unsigned long*)0x40023830)
+#define GPIOA_MODER (*(volatile unsigned long*)0x40020000)
+#define GPIOA_OTYPER (*(volatile unsigned long*)0x40020004)
+#define GPIOA_OSPEEDR (*(volatile unsigned long*)0x40020008)
+#define GPIOA_PUPDR (*(volatile unsigned long*)0x4002000C)
+#define GPIOA_ODR (*(volatile unsigned long*)0x40020014)
 
+#define GPIOC_MODER (*(volatile unsigned long*)0x40020800)
+#define GPIOC_OTYPER (*(volatile unsigned long*)0x40020804)
+#define GPIOC_OSPEEDR (*(volatile unsigned long*)0x40020808)
+#define GPIOC_PUPDR (*(volatile unsigned long*)0x4002080C)
+#define GPIOC_ODR (*(volatile unsigned long*)0x40020814)
 // ----- main() ---------------------------------------------------------------
 
 // Sample pragmas to cope with warnings. Please note the related line at
@@ -67,36 +77,37 @@
 #pragma GCC diagnostic ignored "-Wmissing-declarations"
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
-int
-main(int argc, char* argv[])
-{
-  // Send a greeting to the trace device (skipped on Release).
-  trace_puts("Hello ARM World!");
+void ms_delay_int_count(volatile unsigned int nTime) {
+	nTime = (nTime * 14000);
+	for (; nTime > 0; nTime--);
+}
+int main(int argc, char* argv[]) {
+	int cnt=0;
+	RCC_AHB1ENR = 0x00000005;
+	GPIOA_MODER = 0xA8000050;
+	GPIOA_OTYPER = 0;
+	GPIOA_PUPDR = 0;
+	GPIOA_OSPEEDR = 0;
 
-  // At this stage the system clock should have already been configured
-  // at high speed.
-  trace_printf("System clock: %u Hz\n", SystemCoreClock);
+	GPIOC_MODER = 0x00000550;
+	GPIOC_OTYPER = 0;
+	GPIOC_PUPDR = 0;
+	GPIOC_OSPEEDR = 0;
+	while (1) {
+		if(cnt%2==0)
+		{
+		GPIOA_ODR=0x0004;
+		GPIOC_ODR=0x0028;
+		}
 
-  timer_start();
+		else{
+			GPIOA_ODR=0x0008;
+			GPIOC_ODR=0x0014;}
+		ms_delay_int_count(500);
+		cnt++;
+	}
 
-  blink_led_init();
-  
-  uint32_t seconds = 0;
-
-  // Infinite loop
-  while (1)
-    {
-      blink_led_on();
-      timer_sleep(seconds == 0 ? TIMER_FREQUENCY_HZ : BLINK_ON_TICKS);
-
-      blink_led_off();
-      timer_sleep(BLINK_OFF_TICKS);
-
-      ++seconds;
-      // Count seconds on the trace device.
-      trace_printf("Second %u\n", seconds);
-    }
-  // Infinite loop, never return.
+	// Send a greeting to the trace device (skipped on Release).
 }
 
 #pragma GCC diagnostic pop
