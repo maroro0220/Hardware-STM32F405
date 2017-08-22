@@ -1,5 +1,5 @@
 /*
- * This file is part of the µOS++ distribution.
+ * This file is part of the ÂµOS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -77,7 +77,7 @@ void main(int argc, char* argv[]) {
 	char fu = 'a';
 	char fd = 'a';
 	RCC->AHB1ENR = 0x00000003;
-	GPIOA->MODER = 0xA8001050; //LED, MOTOR ���
+	GPIOA->MODER = 0xA8001050; //LED, MOTOR »ç¿ë
 	GPIOA->OTYPER = 0;
 	GPIOA->OSPEEDR = 0;
 	GPIOA->PUPDR = 0;
