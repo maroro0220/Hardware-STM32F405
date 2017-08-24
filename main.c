@@ -52,72 +52,79 @@ void ms_delay_int_count(volatile unsigned int nTime) {
 	for (; nTime > 0; nTime--)
 		;
 }
+
 void EXTILine_Config(void) {
-	RCC->AHB1ENR |= 0x00000002;  //Enable GPIOB clock
+	RCC->AHB1ENR |= 0x00000001;  //Enable GPIOA clock
 	/*configure PB2 pin as input floating*/
-	GPIOB->MODER = 0x00000280;
-	GPIOB->PUPDR = 0x0000000;
-	GPIOB->OSPEEDR = 0x00000030; //0으로 해줘도 됨
+	GPIOA->MODER = 0xA8000000;
+	GPIOA->PUPDR = 0x0000000;
+	GPIOA->OSPEEDR = 0x0C000000; //0으로 해줘도 됨
 	/*EXTI Mode Configuration*/
 	RCC->APB2ENR |= 0x00004000; //Enable SYSCFG Clock
-	SYSCFG->EXTICR[0] |= 0x00000111; //PB0,1,2 setting
-	EXTI->RTSR |= 0x00000007; // Clear Rising Falling Edge
-	EXTI->IMR |= 0x00000007; //Clear EXTI line Configure
+	SYSCFG->EXTICR[2] |= 0x00000000; //PA8,11 setting
+	SYSCFG->EXTICR[3] |= 0x00000000; //PA12 setting
+	EXTI->RTSR |= 0x00001900; // Clear Rising Falling Edge
+	EXTI->IMR |= 0x00001900; //Clear EXTI line Configure
 	/*Enable and set EXTI LIne2 INterrupt tot he lowest priority*/
-	NVIC_SetPriority(EXTI2_IRQn, 2);  //0부터 쓸 수 있음 -3~-1 은 정해진거라
+	NVIC_SetPriority(EXTI9_5_IRQn, 2);  //PA8 interrupt
 	//	NVIC->IP[2]|=0x00000002;
-	NVIC_EnableIRQ(EXTI2_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
 	// NVIC->ISER[0]|=0x00000100;
-	NVIC_SetPriority(EXTI0_IRQn, 3);
-	NVIC_EnableIRQ(EXTI0_IRQn);
-	NVIC_SetPriority(EXTI1_IRQn, 4);
-	NVIC_EnableIRQ(EXTI1_IRQn);
+	NVIC_SetPriority(EXTI15_10_IRQn, 3);//PA11,12 interrupt
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
-unsigned int f0 = 0, f1 = 0,f2=0;
-int main(int argc, char* argv[]) { /*##-1- Enable GPIOA Clock (tobe able to program the configuration registers)*/
-	RCC->AHB1ENR |= 0x00000001;	//LED_1(PA2),LED_2(PA3)
-	/*## -2- COnfigure PA2, PA3 IO in output push-pull mode to drive external LED##*/
-	GPIOA->MODER = 0xA8000050;
-	GPIOA->PUPDR = 0x00000000;
-	GPIOA->OSPEEDR = 0x000000A0;
-	/*Configure EXTI Line2 (connected to PB2 pin)in interrupt mode*/
-	EXTILine_Config();
-	while (1) {
+unsigned int f0=0,f1=0;
 
-		if (f0) {
-			GPIOA->ODR ^= 0x0004;
+int main(int argc, char* argv[]) {
+	/*##-1- Enable GPIOA Clock (to be able to program the configuration registers) */
+	RCC->AHB1ENR |= 0x00000004; // PC2, PC3   LD1, LD2
+	/*##-2- Configure PA2, PA3 IO in output push-pull mode to drive external LED ###*/
+	GPIOC->MODER = 0x000000050;
+	GPIOC->PUPDR = 0x00000000;
+	GPIOC->OSPEEDR = 0x00000000;
+	/* Configure EXTI Line2 (connected to PB2 pin) in interrupt mode */
+	EXTILine_Config();
+	//GPIOC->ODR=0xF;
+	while (1)
+	{
+		if(f1){
+			GPIOC->ODR^=0x04;
 		}
-		if (f1) {
-			GPIOA->ODR ^= 0x0008;
+		else{
+			GPIOC->ODR|=0x04;
+		}
+		if(f0){
+			GPIOC->ODR^=0x08;
+		}
+		else{
+			GPIOC->ODR|=0x08;
 		}
 		ms_delay_int_count(100);
 	}
 }
-/*인터럽트 루틴*/
-void EXTI0_IRQHandler(void) {
-	if (EXTI->PR == 0x0000001) {	//IRQ<2>에서 인터럽트 요청이 들어온건지확인
-		EXTI->PR |= (1);	//EXTI pending bits(flag)클리어
-		f0 = !f0;
+void EXTI9_5_IRQHandler(void) {
+	if (EXTI->PR == 0x00000001<<8) //IRQ<8>에서 읶터럽트 요청이 들어온 건지 확읶   1<<8
+			{
+		EXTI->PR |= (1 << 8); //EXTI pending bits(flag) 클리어
+		f1=!f1;
 	}
 }
-
-void EXTI1_IRQHandler(void) {
-	if (EXTI->PR == 0x0000002) {	//IRQ<2>에서 인터럽트 요청이 들어온건지확인
-		EXTI->PR |= (1 << 1);	//EXTI pending bits(flag)클리어
-		f1 = !f1;
+void EXTI15_10_IRQHandler(void) {
+	if (EXTI->PR == 0x00000001<<11) //IRQ<11>에서 읶터럽트 요청이 들어온 건지 확읶  1<<11
+			{
+		EXTI->PR |= (1 << 11); //EXTI pending bits(flag) 클리어
+		f0=!f0;
 	}
+	else if (EXTI->PR == 0x00000001<<12) //IRQ<12>에서 읶터럽트 요청이 들어온 건지 확읶  1<<12
+				{
+			EXTI->PR |= (1 << 12); //EXTI pending bits(flag) 클리어
+			GPIOC->ODR ^= 0x000C;
+			f0=0;
+			f1=0;
+		}
 }
 
-void EXTI2_IRQHandler(void) {
-	if (EXTI->PR == 0x0000004) {	//IRQ<2>에서 인터럽트 요청이 들어온건지확인
-		EXTI->PR |= (1 << 2);	//EXTI pending bits(flag)클리어
-
-		GPIOA->ODR ^= 0x000C;
-		f1 = 0;
-		f0 = 0;
-	}
-}
 #pragma GCC diagnostic pop
 
 // ----------------------------------------------------------------------------
