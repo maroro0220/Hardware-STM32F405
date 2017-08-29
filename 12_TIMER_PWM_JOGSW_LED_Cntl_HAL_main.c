@@ -97,7 +97,7 @@ down-counting읷 때
 •CNT ≤ CCRx이면 “active”출력
 •CNT > CCRx이면 “inactive”출력*/
 TIM_OCInit.Pulse = Pulse - 1; // CCR의 설정값
-//TIM_OCInit.OCPolarity = TIM_OCPOLARITY_LOW; // OC 출력을 LOW로 설정
+TIM_OCInit.OCPolarity = TIM_OCPOLARITY_LOW; // OC 출력을 LOW로 설정  없어도 동작함
 HAL_TIM_PWM_Init(&TimHandle); // TIM PWM을 TimHandle에 설정된 값으로 초기화함
 // TIM PWM의 Channel을 TIM_OCInit에 설정된 값으로 초기화함
 HAL_TIM_PWM_ConfigChannel(&TimHandle, &TIM_OCInit, TIM_CHANNEL_3);
