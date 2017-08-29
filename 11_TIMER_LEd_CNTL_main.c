@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -123,11 +123,11 @@ int main(int argc, char* argv[]) {
 	// at high speed.
 
 	// Infinite loop
-	//JOG_UP¸¦ ´©¸£¸é LED1 100msÁ¡¸ê(TIM2)
-	//dndÀº 150ms (3ms)
-	//cenÀº tomotor onoff
-	//lt´Â CW
-	//RT´Â ccw
+	//JOG_UPë¥¼ ëˆ„ë¥´ë©´ LED1 100msì ë©¸(TIM2)
+	//dndì€ 150ms (3ms)
+	//cenì€ tomotor onoff
+	//ltëŠ” CW
+	//RTëŠ” ccw
 //	__HAL_RCC_GPIOA_CLK_ENABLE();
 	TIMER_Config();
 	EXTILine_Config();
