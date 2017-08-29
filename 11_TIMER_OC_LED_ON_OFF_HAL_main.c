@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -68,18 +68,18 @@ void TIMER_Config(){
 	__HAL_RCC_TIM2_CLK_ENABLE();
 
 	//Set TIMx instance
-	TimHandle.Instance=TIM2;// TIM2 »ç¿ë
-	TimHandle.Init.Period=10000-1;// ¾÷µ¥ÀÌÆ® ÀÌ“Xµå ¹ß»ı½Ã ARR=9999·Î ¼³Á¤
-	TimHandle.Init.Prescaler=8400-1;// Prescaler = 8399·Î ¼³Á¤
-	TimHandle.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;// divisionÀ» »ç¿ëÇÏÁö ¾ÊÀ½
-	TimHandle.Init.CounterMode=TIM_COUNTERMODE_UP;// Up Counter ¸ğµå ¼³Á¤
+	TimHandle.Instance=TIM2;// TIM2 ì‚¬ìš©
+	TimHandle.Init.Period=10000-1;// ì—…ë°ì´íŠ¸ ì´Â“Xë“œ ë°œìƒì‹œ ARR=9999ë¡œ ì„¤ì •
+	TimHandle.Init.Prescaler=8400-1;// Prescaler = 8399ë¡œ ì„¤ì •
+	TimHandle.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;// divisionì„ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ
+	TimHandle.Init.CounterMode=TIM_COUNTERMODE_UP;// Up Counter ëª¨ë“œ ì„¤ì •
 	HAL_TIM_Base_Init(&TimHandle);
 	HAL_TIM_Base_Start_IT(&TimHandle);
 
 	//Set TIMx OC instance
-	TIM_OCInit.OCMode=TIM_OCMODE_TIMING;// OC µ¿ÀÛ ¸ğµå ¼³Á¤
-	TIM_OCInit.Pulse=5000-1;// CCRÀÇ ¼³Á¤°ª
-	// TIM OCÀÇ ChannelÀ» TIM_OCInit¿¡ ¼³Á¤µÈ °ªÀ¸·Î ÃÊ±âÈ­ÇÔ
+	TIM_OCInit.OCMode=TIM_OCMODE_TIMING;// OC ë™ì‘ ëª¨ë“œ ì„¤ì •
+	TIM_OCInit.Pulse=5000-1;// CCRì˜ ì„¤ì •ê°’
+	// TIM OCì˜ Channelì„ TIM_OCInitì— ì„¤ì •ëœ ê°’ìœ¼ë¡œ ì´ˆê¸°í™”í•¨
 	HAL_TIM_OC_Init(&TimHandle);
 	HAL_TIM_OC_ConfigChannel(&TimHandle,&TIM_OCInit,TIM_CHANNEL_1);
 	HAL_TIM_OC_Start_IT(&TimHandle,TIM_CHANNEL_1);
