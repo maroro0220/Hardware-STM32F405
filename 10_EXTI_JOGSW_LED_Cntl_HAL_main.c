@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "diag/Trace.h"
-#include "stm32f4xx_hal.h"      //°ü·Ã ·¹Áö½ºÅÍÀÇ ÁÖ¼Ò ÁöÁ¤
+#include "stm32f4xx_hal.h"      //ê´€ë ¨ ë ˆì§€ìŠ¤í„°ì˜ ì£¼ì†Œ ì§€ì •
 #include "stm32f4xx_it.h"
 
 // ----- Timing definitions -------------------------------------------------
