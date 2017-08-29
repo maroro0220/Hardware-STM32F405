@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -54,12 +54,12 @@
 //;**************************************************************************************
 //;* 09_EXTI_JOGSW_LED_ON_OFF_HAL
 //;*
-//;* ÀÌ ÇÁ·Î±×·¥Àº PB2¿¡ ¿¬°áµÈ JOGSW_CEN¿¡¼­ »ó½Â¿¡Áö°¡ ¹ß»ıÇÒ ¶§¸¶´Ù LED1,LED2¸¦ ON/OFFÇÑ´Ù
+//;* ì´ í”„ë¡œê·¸ë¨ì€ PB2ì— ì—°ê²°ëœ JOGSW_CENì—ì„œ ìƒìŠ¹ì—ì§€ê°€ ë°œìƒí•  ë•Œë§ˆë‹¤ LED1,LED2ë¥¼ ON/OFFí•œë‹¤
 //;* Target: stm32f4
 //;**************************************************************************************
 
-#include "stm32f4xx_hal.h"      //°ü·Ã ·¹Áö½ºÅÍÀÇ ÁÖ¼Ò ÁöÁ¤
-#include "stm32f4xx_it.h"	//ÀÎÅÍ·´Æ® »ç¿ë¿¡ ÇÊ¿äÇÑ Çì´õÆÄÀÏ
+#include "stm32f4xx_hal.h"      //ê´€ë ¨ ë ˆì§€ìŠ¤í„°ì˜ ì£¼ì†Œ ì§€ì •
+#include "stm32f4xx_it.h"	//ì¸í„°ëŸ½íŠ¸ ì‚¬ìš©ì— í•„ìš”í•œ í—¤ë”íŒŒì¼
 
 GPIO_InitTypeDef LED;
 GPIO_InitTypeDef JOG_CEN;
@@ -81,7 +81,7 @@ void EXTILine2_Config(void)
 	HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 }
 
-/*¸ŞÀÎ·çÆ¾*/
+/*ë©”ì¸ë£¨í‹´*/
 int main(int argc, char* argv[])
 {
 	/*##-1- Enable GPIOA Clock (to be able to program the configuration registers) */
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 	while (1);
 }
 
-/*ÀÎÅÍ·´Æ® ·çÆ¾*/
+/*ì¸í„°ëŸ½íŠ¸ ë£¨í‹´*/
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
