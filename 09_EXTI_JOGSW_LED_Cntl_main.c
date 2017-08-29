@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -58,7 +58,7 @@ void EXTILine_Config(void) {
 	/*configure PB2 pin as input floating*/
 	GPIOA->MODER = 0xA8000000;
 	GPIOA->PUPDR = 0x0000000;
-	GPIOA->OSPEEDR = 0x0C000000; //0À¸·Î ÇØÁàµµ µÊ
+	GPIOA->OSPEEDR = 0x0C000000; //0ìœ¼ë¡œ í•´ì¤˜ë„ ë¨
 	/*EXTI Mode Configuration*/
 	RCC->APB2ENR |= 0x00004000; //Enable SYSCFG Clock
 	SYSCFG->EXTICR[2] |= 0x00000000; //PA8,11 setting
@@ -104,21 +104,21 @@ int main(int argc, char* argv[]) {
 	}
 }
 void EXTI9_5_IRQHandler(void) {
-	if (EXTI->PR == 0x00000001<<8) //IRQ<8>¿¡¼­ ŸÚÅÍ·´Æ® ¿äÃ»ÀÌ µé¾î¿Â °ÇÁö È®ŸÚ   1<<8
+	if (EXTI->PR == 0x00000001<<8) //IRQ<8>ì—ì„œ ÂŸæ°‘åº«ëŠ  ìš”ì²­ì´ ë“¤ì–´ì˜¨ ê±´ì§€ í™•ÂŸ   1<<8
 			{
-		EXTI->PR |= (1 << 8); //EXTI pending bits(flag) Å¬¸®¾î
+		EXTI->PR |= (1 << 8); //EXTI pending bits(flag) í´ë¦¬ì–´
 		f1=!f1;
 	}
 }
 void EXTI15_10_IRQHandler(void) {
-	if (EXTI->PR == 0x00000001<<11) //IRQ<11>¿¡¼­ ŸÚÅÍ·´Æ® ¿äÃ»ÀÌ µé¾î¿Â °ÇÁö È®ŸÚ  1<<11
+	if (EXTI->PR == 0x00000001<<11) //IRQ<11>ì—ì„œ ÂŸæ°‘åº«ëŠ  ìš”ì²­ì´ ë“¤ì–´ì˜¨ ê±´ì§€ í™•ÂŸ  1<<11
 			{
-		EXTI->PR |= (1 << 11); //EXTI pending bits(flag) Å¬¸®¾î
+		EXTI->PR |= (1 << 11); //EXTI pending bits(flag) í´ë¦¬ì–´
 		f0=!f0;
 	}
-	else if (EXTI->PR == 0x00000001<<12) //IRQ<12>¿¡¼­ ŸÚÅÍ·´Æ® ¿äÃ»ÀÌ µé¾î¿Â °ÇÁö È®ŸÚ  1<<12
+	else if (EXTI->PR == 0x00000001<<12) //IRQ<12>ì—ì„œ ÂŸæ°‘åº«ëŠ  ìš”ì²­ì´ ë“¤ì–´ì˜¨ ê±´ì§€ í™•ÂŸ  1<<12
 				{
-			EXTI->PR |= (1 << 12); //EXTI pending bits(flag) Å¬¸®¾î
+			EXTI->PR |= (1 << 12); //EXTI pending bits(flag) í´ë¦¬ì–´
 			GPIOC->ODR ^= 0x000C;
 			f0=0;
 			f1=0;
