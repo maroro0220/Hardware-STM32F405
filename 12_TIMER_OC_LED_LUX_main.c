@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -88,10 +88,10 @@ void TIMER_Config(){
 	__HAL_RCC_TIM2_CLK_ENABLE();
 	TimHandle.Instance=TIM2;
 	TimHandle.Init.Period=Pulse-1;
-	TimHandle.Init.Prescaler=84;//ÁÖ±â¸¦ Âª°Ô ÇØÁÖ·Á°í 0
+	TimHandle.Init.Prescaler=84;//ì£¼ê¸°ë¥¼ ì§§ê²Œ í•´ì£¼ë ¤ê³  0
 	TimHandle.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;
 	TimHandle.Init.CounterMode=TIM_COUNTERMODE_UP;
-	//TimHandle.Channel ±¸Á¶Ã¼¿¡ Channel°ªµµ ÀÖ´Âµ¥ ¿ì¸®°¡ Á÷Á¢ °Çµå¸®Áö´Â ¾Ê°í HALµå¶óÀÌ¹ö¿¡¼­ È£Ãâ ÇÒ ‹š ¾Ë¾Æ¼­ ³Ö¾îÁÜ
+	//TimHandle.Channel êµ¬ì¡°ì²´ì— Channelê°’ë„ ìˆëŠ”ë° ìš°ë¦¬ê°€ ì§ì ‘ ê±´ë“œë¦¬ì§€ëŠ” ì•Šê³  HALë“œë¼ì´ë²„ì—ì„œ í˜¸ì¶œ í•  Â‹Âš ì•Œì•„ì„œ ë„£ì–´ì¤Œ
 
 	HAL_TIM_Base_Init(&TimHandle);
 	HAL_TIM_Base_Start_IT(&TimHandle);
