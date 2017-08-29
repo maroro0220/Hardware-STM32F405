@@ -73,7 +73,7 @@ int flag;
 void LED_Config() {
 	__HAL_RCC_GPIOA_CLK_ENABLE()
 	;
-	LED.Pin = GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_6; //6Àº MOTOR PWM
+	LED.Pin = GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_6; //6ï¿½ï¿½ MOTOR PWM
 	LED.Mode = GPIO_MODE_OUTPUT_PP;
 	LED.Pull = GPIO_NOPULL;
 	LED.Speed = GPIO_SPEED_HIGH;
@@ -83,7 +83,7 @@ void LED_Config() {
 void PIEZO_Config(){
 	__HAL_RCC_GPIOB_CLK_ENABLE()
 	;
-	PIE.Pin = GPIO_PIN_15; //6Àº MOTOR PWM
+	PIE.Pin = GPIO_PIN_15; //6ï¿½ï¿½ MOTOR PWM
 	PIE.Mode = GPIO_MODE_OUTPUT_PP;
 	PIE.Pull = GPIO_NOPULL;
 	PIE.Speed = GPIO_SPEED_HIGH;
