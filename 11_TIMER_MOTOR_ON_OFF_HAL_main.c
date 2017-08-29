@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -41,8 +41,8 @@
 // changing the definitions required in system/src/diag/trace_impl.c
 // (currently OS_USE_TRACE_ITM, OS_USE_TRACE_SEMIHOSTING_DEBUG/_STDOUT).
 //
-TIM_HandleTypeDef TimHandle; // Å¸ÀÌ¸ÓÀÇ ÃÊ±âÈ­¿ë ±¸Á¶Ã¼ º¯¼ö¸¦ ¼±¾ğ
-GPIO_InitTypeDef MOT, PWM; // GPIOÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ º¯¼ö¸¦ ¼±¾ğ
+TIM_HandleTypeDef TimHandle; // íƒ€ì´ë¨¸ì˜ ì´ˆê¸°í™”ìš© êµ¬ì¡°ì²´ ë³€ìˆ˜ë¥¼ ì„ ì–¸
+GPIO_InitTypeDef MOT, PWM; // GPIOì˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´ ë³€ìˆ˜ë¥¼ ì„ ì–¸
 
 void TIMER_Config(void) {
 	/*##-1- Enable peripherals and GPIO Clocks #################################*/
@@ -50,11 +50,11 @@ void TIMER_Config(void) {
 	__HAL_RCC_TIM3_CLK_ENABLE()
 	;
 	/* Set TIMx instance */
-	TimHandle.Instance = TIM3; // TIM3»ç¿ë
-	TimHandle.Init.Period = 10000 - 1; // ¾÷µ¥ÀÌÆ® ÀÌ“Xµå ¹ß»ı½Ã ARR=9999·Î ¼³Á¤
-	TimHandle.Init.Prescaler = 8400 - 1; // Prescaler = 8399·Î ¼³Á¤
-	TimHandle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1; // divisionÀ» »ç¿ëÇÏÁö ¾ÊÀ½
-	TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP; //up Counter ¸ğµå ¼³Á¤
+	TimHandle.Instance = TIM3; // TIM3ì‚¬ìš©
+	TimHandle.Init.Period = 10000 - 1; // ì—…ë°ì´íŠ¸ ì´Â“Xë“œ ë°œìƒì‹œ ARR=9999ë¡œ ì„¤ì •
+	TimHandle.Init.Prescaler = 8400 - 1; // Prescaler = 8399ë¡œ ì„¤ì •
+	TimHandle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1; // divisionì„ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ
+	TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP; //up Counter ëª¨ë“œ ì„¤ì •
 	HAL_TIM_Base_Init(&TimHandle);
 	/*##-2- Start the TIM Base generation in interrupt mode ####################*/
 	HAL_TIM_Base_Start_IT(&TimHandle); /* Start Channel1 */
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,1);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,0);
 	TIMER_Config();
-	/*¸ŞŸÚ·çÆ¾¿¡¼­ ÇÏ´Â ŸÛ*/
+	/*ë©”ÂŸç±³ï¦¯ì”©ã€ í•˜ëŠ” ÂŸ*/
 	while (1)
 		;
 }\
