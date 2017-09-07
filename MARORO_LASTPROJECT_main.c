@@ -55,7 +55,6 @@ int PT = 0, WT = 0;
 unsigned int period, buf;
 unsigned int Mot_flag = 0, Led_flag = 0, LT_flag = 0;
 
-
 int SHT_Config() {
 	double T;
 	TxBuffer[0] = SHT_TEMPER_HOLD;
@@ -109,36 +108,44 @@ int main(int argc, char* argv[]) {
 	LED_Config();
 	MOTOR_Config();
 
+	TxBuffer[0] = SHT_RESET_SOFT; //Trigger T measurement hold master 1110’0011
+	HAL_I2C_Master_Transmit(&I2CxHandle, (uint16_t) I2C_ADDRESS,
+			(uint8_t*) &TxBuffer, 1, 100);
+	HAL_UART_Transmit(&UartHandle1, (uint8_t*) UART_TxBuffer,
+			strlen(UART_TxBuffer), 100);
 
-		TxBuffer[0] = SHT_RESET_SOFT; //Trigger T measurement hold master 1110’0011
-		HAL_I2C_Master_Transmit(&I2CxHandle, (uint16_t) I2C_ADDRESS,
-				(uint8_t*) &TxBuffer, 1, 100);
-		HAL_UART_Transmit(&UartHandle1, (uint8_t*) UART_TxBuffer,
-				strlen(UART_TxBuffer), 100);
+	strcpy(UART_InTxBuffer, "Wanna Temp \n\r");
+	HAL_UART_Transmit(&UartHandle1, (uint8_t*) UART_InTxBuffer,
+			strlen(UART_InTxBuffer), 100);
 
-		strcpy(UART_InTxBuffer, "Wanna Temp \n\r");
-		HAL_UART_Transmit(&UartHandle1, (uint8_t*) UART_InTxBuffer,
-				strlen(UART_InTxBuffer), 100);
-
-		while (1) {
+	while (1) {
 //			if (PIR_flag) {
 //			PIEZO_SW(1);
 //			}
-			PT = SHT_Config();
-			sprintf(RxBuffer, "NOW temp = %d C", PT);
-			CLCD_write(0, 0x80);
-			clcd_put_string(RxBuffer);
 
-			HAL_Delay(300); //ms
+		PT = SHT_Config();
+		sprintf(RxBuffer, "NOW temp = %d C", PT);
+		CLCD_write(0, 0x80);
+		clcd_put_string(RxBuffer);
 
-			MOTOR_SW(Mot_flag);
-			LED_SW(Led_flag);
-
-			HAL_Delay(100);
-			HAL_UART_Receive_IT(&UartHandle1, (uint8_t*) UART_InRxBuffer, 2);
-
-
+		HAL_UART_Receive_IT(&UartHandle1, (uint8_t*) UART_InRxBuffer, 2);
+		MOTOR_SW(Mot_flag);
+		LED_SW(Led_flag);
+		if (WT < PT) {
+			Mot_flag = 1;
+			Led_flag = 0;
+		} else if (WT > PT) {
+			Mot_flag = 0;
+			Led_flag = 1;
+		} else if (WT == PT) {
+			Mot_flag = 0;
+			Led_flag = 2;
 		}
+		if (PT > 60) {
+			PIEZO_SW(1);
+		}
+		HAL_Delay(100);
+	}
 }
 //void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	if(GPIO_Pin==GPIO_PIN_8){
@@ -155,21 +162,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	sprintf(RxBuffer, "Want temp = %d C", WT);
 	CLCD_write(0, 0xc0);
 	clcd_put_string(RxBuffer);
-
-	if (WT < PT) {
-		Mot_flag = 1;
-		Led_flag = 0;
-	} else if (WT > PT) {
-		Mot_flag = 0;
-		Led_flag = 1;
-	}
-	else if (WT == PT) {
-		Mot_flag = 0;
-		Led_flag = 2;
-	}
-	if (PT > 60) {
-		PIEZO_SW(1);
-	}
 
 //	HAL_UART_Receive_IT(&UartHandle2, (uint8_t*) UART_InRxBuffer, 2); 이 경우에는 여기에 쓰면 안됨.
 }
