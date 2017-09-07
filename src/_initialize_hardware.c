@@ -110,9 +110,6 @@ SysTick_Handler(void)
  * @param  None
  * @retval None
  */
-//void
-//__attribute__((weak))
-/** System Clock Configuration*/
 void SystemClock_Config(void)
 {
 
@@ -154,3 +151,6 @@ void SystemClock_Config(void)
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
+
+
+// ----------------------------------------------------------------------------
