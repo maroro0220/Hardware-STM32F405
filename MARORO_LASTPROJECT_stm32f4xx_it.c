@@ -66,15 +66,15 @@
  * @param  None
  * @retval None
  */
-// TIM ŸÚÅÍ·´Æ® ISRÀ» À§ÇÑ TimHandler º¯¼ö¸¦ ¿ÜºÎÁ¤ÀÇ º¯¼ö·Î ¼±¾ğ
+// TIM ÂŸæ°‘åº«ëŠ  ISRì„ ìœ„í•œ TimHandler ë³€ìˆ˜ë¥¼ ì™¸ë¶€ì •ì˜ ë³€ìˆ˜ë¡œ ì„ ì–¸
 
-//extern GPIO_InitTypeDef LED, VR, CLCD, SONIC_T, SONIC_E, PWM, MOTOR, JOG, PI; // GPIOÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ÇüÀÇ º¯¼ö¸¦ ¼±¾ğ
-extern ADC_HandleTypeDef AdcHandler; // ADCÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ÇüÀÇ º¯¼ö¸¦ ¼±¾ğ
+//extern GPIO_InitTypeDef LED, VR, CLCD, SONIC_T, SONIC_E, PWM, MOTOR, JOG, PI; // GPIOì˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´í˜•ì˜ ë³€ìˆ˜ë¥¼ ì„ ì–¸
+extern ADC_HandleTypeDef AdcHandler; // ADCì˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´í˜•ì˜ ë³€ìˆ˜ë¥¼ ì„ ì–¸
 //extern ADC_ChannelConfTypeDef sConfig;
 extern TIM_HandleTypeDef TimHandle;
 extern GPIO_InitTypeDef PIR;
 extern UART_HandleTypeDef UartHandle1;
-/* ±âº» ¿¹¿Ü Ã³¸® ÇÚµé·¯ ÇÔ¼ö ±¸Çö */
+/* ê¸°ë³¸ ì˜ˆì™¸ ì²˜ë¦¬ í•¸ë“¤ëŸ¬ í•¨ìˆ˜ êµ¬í˜„ */
 
 void NMI_Handler(void) {
 }
@@ -185,19 +185,19 @@ void SysTick_Handler(void) {
 void EXTI9_5_IRQHandler(){
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
 }
-/* Å¸ÀÌ¸Ó ŸÚÅÍ·´Æ® Ã³¸® ÇÚµé·¯ ÇÔ¼ö ±¸Çö */
+/* íƒ€ì´ë¨¸ ÂŸæ°‘åº«ëŠ  ì²˜ë¦¬ í•¸ë“¤ëŸ¬ í•¨ìˆ˜ êµ¬í˜„ */
 
-//void TIM2_IRQHandler(void) // TIM2_IRQHandler Ãß°¡
+//void TIM2_IRQHandler(void) // TIM2_IRQHandler ì¶”ê°€
 //{
-//	HAL_TIM_IRQHandler(&TimHandle); // TIM ŸÚÅÍ·´Æ® Callback ÇÔ¼ö
+//	HAL_TIM_IRQHandler(&TimHandle); // TIM ÂŸæ°‘åº«ëŠ  Callback í•¨ìˆ˜
 //}
 //
 //void ADC_IRQHandler(){
 //	HAL_ADC_IRQHandler(&AdcHandler);
 //}
-void USART1_IRQHandler(void) // USART2_IRQHandler Ãß°¡
+void USART1_IRQHandler(void) // USART2_IRQHandler ì¶”ê°€
 {
-HAL_UART_IRQHandler(&UartHandle1); // UART ŸÚÅÍ·´Æ® Callback ÇÔ¼ö
+HAL_UART_IRQHandler(&UartHandle1); // UART ÂŸæ°‘åº«ëŠ  Callback í•¨ìˆ˜
 }
 /**
  * @brief  This function handles PPP interrupt request.
