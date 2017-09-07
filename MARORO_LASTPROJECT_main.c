@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	MOTOR_Config();
 
 
-		TxBuffer[0] = SHT_RESET_SOFT; //Trigger T measurement hold master 1110¡¯0011
+		TxBuffer[0] = SHT_RESET_SOFT; //Trigger T measurement hold master 1110â€™0011
 		HAL_I2C_Master_Transmit(&I2CxHandle, (uint16_t) I2C_ADDRESS,
 				(uint8_t*) &TxBuffer, 1, 100);
 		HAL_UART_Transmit(&UartHandle1, (uint8_t*) UART_TxBuffer,
@@ -171,7 +171,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 		PIEZO_SW(1);
 	}
 
-//	HAL_UART_Receive_IT(&UartHandle2, (uint8_t*) UART_InRxBuffer, 2); ÀÌ °æ¿ì¿¡´Â ¿©±â¿¡ ¾²¸é ¾ÈµÊ.
+//	HAL_UART_Receive_IT(&UartHandle2, (uint8_t*) UART_InRxBuffer, 2); ì´ ê²½ìš°ì—ëŠ” ì—¬ê¸°ì— ì“°ë©´ ì•ˆë¨.
 }
 
 // ----------------------------------------------------------------------------
