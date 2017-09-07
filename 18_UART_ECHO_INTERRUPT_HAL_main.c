@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -29,11 +29,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "diag/Trace.h"
-#include "stm32f4xx_hal.h" //°ü·Ã ·¹Áö½ºÅÍÀÇ ÁÖ¼Ò ÁöÁ¤
-#include "stm32f4xx_it.h" //ŸÚÅÍ·´Æ® »ç¿ë¿¡ ÇÊ¿äÇÑ Çì´õÆÄŸÛ
+#include "stm32f4xx_hal.h" //ê´€ë ¨ ë ˆì§€ìŠ¤í„°ì˜ ì£¼ì†Œ ì§€ì •
+#include "stm32f4xx_it.h" //ÂŸæ°‘åº«ëŠ  ì‚¬ìš©ì— í•„ìš”í•œ í—¤ë”íŒŒÂŸ
 #include "string.h"
-GPIO_InitTypeDef GPIO_Init_Struct,LD,MOTOR,PWM;// GPIOÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ÇüÀÇ º¯¼ö¸¦ ¼±¾ğ
-UART_HandleTypeDef UartHandle; // UARTÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ÇüÀÇ º¯¼ö¸¦ ¼±¾ğ
+GPIO_InitTypeDef GPIO_Init_Struct,LD,MOTOR,PWM;// GPIOì˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´í˜•ì˜ ë³€ìˆ˜ë¥¼ ì„ ì–¸
+UART_HandleTypeDef UartHandle; // UARTì˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´í˜•ì˜ ë³€ìˆ˜ë¥¼ ì„ ì–¸
 
 // ----- main() ---------------------------------------------------------------
 
@@ -42,16 +42,16 @@ UART_HandleTypeDef UartHandle; // UARTÀÇ ÃÊ±âÈ­¸¦ À§ÇÑ ±¸Á¶Ã¼ÇüÀÇ º¯¼ö¸¦ ¼±¾ğ
 #pragma GCC diagnostic ignored "-Wmissing-declarations"
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
-// UART ÅëšßÀ» À§ÇÑ Á¤ÀÇ
-#define TxBufferSize (countof(TxBuffer) - 1) // ¼Ûšß ¹öÆÛ »çÀÌÁî Á¤ÀÇ
-#define RxBufferSize 0xFF // ¼öšß ¹öÆÛ »çÀÌÁî¸¦ 0xFF·Î Á¤ÀÇ
-#define countof(a) (sizeof(a) / sizeof(*(a))) // µ¥ÀÌÅÍ »çÀÌÁî
+// UART í†µÂšåƒ ìœ„í•œ ì •ì˜
+#define TxBufferSize (countof(TxBuffer) - 1) // ì†¡Âš ë²„í¼ ì‚¬ì´ì¦ˆ ì •ì˜
+#define RxBufferSize 0xFF // ìˆ˜Âš ë²„í¼ ì‚¬ì´ì¦ˆë¥¼ 0xFFë¡œ ì •ì˜
+#define countof(a) (sizeof(a) / sizeof(*(a))) // ë°ì´í„° ì‚¬ì´ì¦ˆ
 
-// UART Åëšß¿ë º¯¼ö ¼±¾ğ
+// UART í†µÂšå‚· ë³€ìˆ˜ ì„ ì–¸
 uint8_t TxBuffer[] = "UART Example 1 (Transmission Success !!)\n\r";
 uint8_t RxBuffer[RxBufferSize];
 uint8_t ErBuffer[30];  //uint8_t->char   str warning deleted
-// -- UARTÀÇ ÃÊ±â¼³Á¤À» À§ÇÑ ÇÔ¼ö
+// -- UARTì˜ ì´ˆê¸°ì„¤ì •ì„ ìœ„í•œ í•¨ìˆ˜
 void UART_config(void) // USART2_TX(PA2), USART2_RX(PA3)
 {
 	__HAL_RCC_GPIOA_CLK_ENABLE()
@@ -66,18 +66,18 @@ void UART_config(void) // USART2_TX(PA2), USART2_RX(PA3)
 	GPIO_Init_Struct.Alternate = GPIO_AF7_USART2;
 	HAL_GPIO_Init(GPIOA, &GPIO_Init_Struct);
 
-	// UARTÀÇ µ¿ÀÛ Á¶°Ç ¼³Á¤
+	// UARTì˜ ë™ì‘ ì¡°ê±´ ì„¤ì •
 	UartHandle.Instance = USART2;
 	UartHandle.Init.BaudRate = 9600;
 	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
-	UartHandle.Init.StopBits = UART_STOPBITS_1;//ÇÁ·¹ÀÓ? µ¥ÀÌÅÍ? ¸¶Áö¸·¿¡ ¸¶Áö¸·ÀÌ¶ó´Â stopºñÆ®¸¦ 1ºñÆ® ÇÒÁö 2ºñÆ®ÇÒÁö
+	UartHandle.Init.StopBits = UART_STOPBITS_1;//í”„ë ˆì„? ë°ì´í„°? ë§ˆì§€ë§‰ì— ë§ˆì§€ë§‰ì´ë¼ëŠ” stopë¹„íŠ¸ë¥¼ 1ë¹„íŠ¸ í• ì§€ 2ë¹„íŠ¸í• ì§€
 	UartHandle.Init.Parity = UART_PARITY_NONE;
 	UartHandle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 	UartHandle.Init.Mode = UART_MODE_TX_RX;
 	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
-	// UART ±¸¼ºÁ¤º¸¸¦ UartHandle¿¡ ¼³Á¤µÈ °ªÀ¸·Î ÃÊ±âÈ­ ÇÔ
+	// UART êµ¬ì„±ì •ë³´ë¥¼ UartHandleì— ì„¤ì •ëœ ê°’ìœ¼ë¡œ ì´ˆê¸°í™” í•¨
 	HAL_UART_Init(&UartHandle);
-	 //UART ŸÚÅÍ·´Æ® ¿ì¼± ¼øÀ§ ¼³Á¤ ¹× ÃR¼ºÈ­
+	 //UART ÂŸæ°‘åº«ëŠ  ìš°ì„  ìˆœìœ„ ì„¤ì • ë° Rì„±í™”
 	HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(USART2_IRQn);
 }
@@ -112,7 +112,7 @@ int main(int argc, char* argv[]) {
 	UART_config();
 	LD_Config();
 	MOTOR_Config();
-	// TxBuffer¿¡ ÀúÀåµÇ¾î ÀÖ´Â ³»¿ëÀ» PC·Î º¸³½´Ù.
+	// TxBufferì— ì €ì¥ë˜ì–´ ìˆëŠ” ë‚´ìš©ì„ PCë¡œ ë³´ë‚¸ë‹¤.
 	HAL_UART_Transmit(&UartHandle, (uint8_t*) TxBuffer, TxBufferSize, 0xFFFF);
 	HAL_UART_Receive_IT(&UartHandle, (uint8_t*) RxBuffer, 2);
 	while (1) {
@@ -120,9 +120,9 @@ int main(int argc, char* argv[]) {
 
 }
 
-/* UART ŸÚÅÍ·´Æ® Callback ÇÔ¼ö */ // Interrupt ¸ğµå ¼öšßÀÌ ¿Ï·áµÇ¸é È£ÃâµÇ´Â callback ÇÔ¼ö
+/* UART ÂŸæ°‘åº«ëŠ  Callback í•¨ìˆ˜ */ // Interrupt ëª¨ë“œ ìˆ˜Âšåƒ ì™„ë£Œë˜ë©´ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-// ¼öšßÀÌ ¿Ï·áµÇ¸é ¼öšßµÈ µ¥ÀÌÅÍ¸¦ ±×´ë·Î ¼Ûšß
+// ìˆ˜Âšåƒ ì™„ë£Œë˜ë©´ ìˆ˜Âšæ£® ë°ì´í„°ë¥¼ ê·¸ëŒ€ë¡œ ì†¡Âš
 	RxBuffer[2] = '\n';
 	RxBuffer[3] = '\r';
 	HAL_UART_Transmit(huart, (uint8_t*) RxBuffer, 4, 0xFFFF);
