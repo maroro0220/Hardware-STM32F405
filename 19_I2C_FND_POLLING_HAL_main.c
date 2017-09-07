@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -47,15 +47,15 @@
 
 GPIO_InitTypeDef GPIO_Init_Struct;
 I2C_HandleTypeDef I2CxHandle;
-// FND Ãâ·Â µ¥ÀÌÅÍ ¼±¾ğ
+// FND ì¶œë ¥ ë°ì´í„° ì„ ì–¸
 unsigned char FND_data[10] = {0xFC, 0x60, 0xDA, 0xF2, 0x66, 0xB6, 0x3E, 0xE0, 0xFE, 0xF6};
-// I2C Åëšß¿ë º¯¼ö ¼±¾ğ
+// I2C í†µÂšå‚· ë³€ìˆ˜ ì„ ì–¸
 uint8_t TxBuffer[5];
 
 void I2C_config(){
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_I2C2_CLK_ENABLE();//I2C2
-	//GPIO BÆ÷Æ® 8, 9¹ø ÇÉÀ» I2C ÀüÈ¯±â´ÉÀ¸·Î ¼³Á¤
+	//GPIO Bí¬íŠ¸ 8, 9ë²ˆ í•€ì„ I2C ì „í™˜ê¸°ëŠ¥ìœ¼ë¡œ ì„¤ì •
 	GPIO_Init_Struct.Pin=GPIO_PIN_10|GPIO_PIN_11;
 	GPIO_Init_Struct.Mode=GPIO_MODE_AF_OD;/*!< Alternate Function Open Drain Mode    */
 	GPIO_Init_Struct.Pull=GPIO_PULLUP; //pullup mode
@@ -73,44 +73,44 @@ void I2C_config(){
 //	I2CxHandle.Init.OwnAddress2=0;
 //	I2CxHandle.Init.GeneralCallMode=I2C_GENERALCALL_DISABLE;
 //	I2CxHandle.Init.NoStretchMode=I2C_NOSTRETCH_DISABLE;
-	//À§¿¡ 4°³ ¾ø¾îµµµÊ Áö±İÀº
+	//ìœ„ì— 4ê°œ ì—†ì–´ë„ë¨ ì§€ê¸ˆì€
 	HAL_I2C_Init(&I2CxHandle);
 }
 void i2cSendValue(int tempCycles){
 	unsigned int temp;
 	temp = tempCycles/100000;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0x7F; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	tempCycles%=100000;
 	FND_clear();
 
 	temp = tempCycles/10000;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xBF; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	tempCycles%=10000;
 	FND_clear();
 
 	temp = tempCycles/1000;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xDF; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	tempCycles%=1000;
 	FND_clear();
 
 	temp = tempCycles/100;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xEF; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	tempCycles%=100;
 	FND_clear();
 
 	temp = tempCycles/10;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xF7; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	tempCycles%=10;
 	FND_clear();
 
 	temp = tempCycles;
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xFB; TxBuffer[2]=FND_data[temp];
-	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ÀÌ¸é 0,1,2 data¸¦ ¿©·¯°³ ÇÏ·Á¸é ´õ ´Ã·ÁÁÖ¸éµÊ. Áö±İÀº µ¥ÀÌÅÍ 2°³. 0Àº command
+	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);// 3ì´ë©´ 0,1,2 dataë¥¼ ì—¬ëŸ¬ê°œ í•˜ë ¤ë©´ ë” ëŠ˜ë ¤ì£¼ë©´ë¨. ì§€ê¸ˆì€ ë°ì´í„° 2ê°œ. 0ì€ command
 	FND_clear();
 }
 // ----- main() ---------------------------------------------------------------
@@ -124,7 +124,7 @@ void i2cSendValue(int tempCycles){
 void FND_clear(){
 	TxBuffer[0]=OUT_PORT0; TxBuffer[1]=0xFF; TxBuffer[2]=0x00;
 	HAL_I2C_Master_Transmit(&I2CxHandle,(uint16_t)I2C_ADDRESS,(uint8_t*)&TxBuffer,3,100);
-	HAL_Delay(0.01);//system tick?À» ÀÌ¿ëÇÑ Áö¿¬ÇÔ¼ö. systick.  _it.c¿¡ µé¾î°¡º¸¸é ÀÖÀ½. system°ªÀ» Áõ°¡
+	HAL_Delay(0.01);//system tick?ì„ ì´ìš©í•œ ì§€ì—°í•¨ìˆ˜. systick.  _it.cì— ë“¤ì–´ê°€ë³´ë©´ ìˆìŒ. systemê°’ì„ ì¦ê°€
 }
 int
 main(int argc, char* argv[])
@@ -134,7 +134,7 @@ main(int argc, char* argv[])
 	HAL_I2C_Master_Transmit(&I2CxHandle, (uint16_t)I2C_ADDRESS, (uint8_t*)TxBuffer, 3, 100);
   while (1)
     {
-	  i2cSendValue(123456); // FND¿¡ 12345¸¦ Ãâ·Â
+	  i2cSendValue(123456); // FNDì— 12345ë¥¼ ì¶œë ¥
     }
 }
 
