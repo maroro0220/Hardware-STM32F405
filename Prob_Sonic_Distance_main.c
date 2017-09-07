@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -53,19 +53,19 @@
 TIM_HandleTypeDef TimHandle;
 GPIO_InitTypeDef SONIC_T, SONIC_E, GPIO_Init_Struct;
 ;
-static void ms_delay_int_count(volatile unsigned int nTime) // ms Áö¿¬
+static void ms_delay_int_count(volatile unsigned int nTime) // ms ì§€ì—°
 {
 nTime = (nTime * 14000);
 for(; nTime > 0; nTime--);
 }
-static void us_delay_int_count(volatile unsigned int nTime) // us Áö¿¬
+static void us_delay_int_count(volatile unsigned int nTime) // us ì§€ì—°
 {
 nTime = (nTime * 12);
 for(; nTime > 0; nTime--);
 }
 void CLCD_Config() {
 
-	// CLCD¿ë GPIO (GPIOC)ÀÇ ÃÊ±â¼³Á¤À» ÇÔ
+	// CLCDìš© GPIO (GPIOC)ì˜ ì´ˆê¸°ì„¤ì •ì„ í•¨
 	__HAL_RCC_GPIOC_CLK_ENABLE()
 	;
 	// CLCD_RS(PC8), CLCD_E(PC9, DATA 4~5(PC12~15)
@@ -99,12 +99,12 @@ void CLCD_write(unsigned char rs, char data) {
 	us_delay_int_count(2);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET); // CLCD_E = 0
 	ms_delay_int_count(2);
-	//½Ã°£ ¾ö¼ö. Ã³¸®ÇÏ´Âµ¥ ÇÊ¿äÇÑ ½Ã°£
+	//ì‹œê°„ ì—„ìˆ˜. ì²˜ë¦¬í•˜ëŠ”ë° í•„ìš”í•œ ì‹œê°„
 }
 void CLCD_init() {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
-	CLCD_write(0, 0x33); // 4ºñÆ® ¼³Á¤ Æ¯¼ö ¸í·É
-	CLCD_write(0, 0x32); // 4ºñÆ® ¼³Á¤ Æ¯¼ö ¸í·É
+	CLCD_write(0, 0x33); // 4ë¹„íŠ¸ ì„¤ì • íŠ¹ìˆ˜ ëª…ë ¹
+	CLCD_write(0, 0x32); // 4ë¹„íŠ¸ ì„¤ì • íŠ¹ìˆ˜ ëª…ë ¹
 	CLCD_write(0, 0x28); // _set_function
 	CLCD_write(0, 0x0F); // _set_display
 	CLCD_write(0, 0x01); // clcd_clear
