@@ -17,22 +17,22 @@ UART_HandleTypeDef UartHandle;
 #pragma GCC diagnostic ignored "-Wmissing-declarations"
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
-// UART ÅëšßÀ» À§ÇÑ Á¤ÀÇ
-#define TxBufferSize (countof(TxBuffer) - 1) // ¼Ûšß ¹öÆÛ »çÀÌÁî Á¤ÀÇ
-#define RxBufferSize 0xFF // ¼öšß ¹öÆÛ »çÀÌÁî¸¦ 0xFF·Î Á¤ÀÇ
-#define countof(a) (sizeof(a) / sizeof(*(a))) // µ¥ÀÌÅÍ »çÀÌÁî
-// UART Åëšß¿ë º¯¼ö ¼±¾ğ
+// UART í†µÂšåƒ ìœ„í•œ ì •ì˜
+#define TxBufferSize (countof(TxBuffer) - 1) // ì†¡Âš ë²„í¼ ì‚¬ì´ì¦ˆ ì •ì˜
+#define RxBufferSize 0xFF // ìˆ˜Âš ë²„í¼ ì‚¬ì´ì¦ˆë¥¼ 0xFFë¡œ ì •ì˜
+#define countof(a) (sizeof(a) / sizeof(*(a))) // ë°ì´í„° ì‚¬ì´ì¦ˆ
+// UART í†µÂšå‚· ë³€ìˆ˜ ì„ ì–¸
 uint8_t TxBuffer[] = "UART Example 1 (Transmission Success!!)\n\r";//uint8_t Redefine
 uint8_t RxBuffer[RxBufferSize];
 uint8_t ErBuffer[30];  //uint8_t->char   str warning deleted
 
-// -- UARTÀÇ ÃÊ±â¼³Á¤À» À§ÇÑ ÇÔ¼ö
+// -- UARTì˜ ì´ˆê¸°ì„¤ì •ì„ ìœ„í•œ í•¨ìˆ˜
 void UART_config() {
 	// USART2_TX(PA2), USART2_RX(PA3)
-	// UARTÀÇ Å¬·°À» ÃR¼ºÈ­
+	// UARTì˜ í´ëŸ­ì„ Rì„±í™”
 //	__HAL_RCC_GPIOA_CLK_ENABLE();
 //	__HAL_RCC_USART2_CLK_ENABLE();
-//	// GPIO AÆ÷Æ® 2¹ø ÇÉÀ» USART Tx, 3¹ø ÇÉÀ» USART Rx ·Î ¼³Á¤
+//	// GPIO Aí¬íŠ¸ 2ë²ˆ í•€ì„ USART Tx, 3ë²ˆ í•€ì„ USART Rx ë¡œ ì„¤ì •
 //	GPIO_Init_Struct.Pin=GPIO_PIN_2|GPIO_PIN_3;
 //	GPIO_Init_Struct.Mode=GPIO_MODE_AF_PP;
 //	GPIO_Init_Struct.Pull=GPIO_NOPULL;
@@ -49,18 +49,18 @@ void UART_config() {
 	GPIO_Init_Struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_Init_Struct.Alternate = GPIO_AF7_USART1;
 	HAL_GPIO_Init(GPIOA, &GPIO_Init_Struct);
-//	// UARTÀÇ µ¿ÀÛ Á¶°Ç ¼³Á¤
+//	// UARTì˜ ë™ì‘ ì¡°ê±´ ì„¤ì •
 //	UartHandle.Instance= USART2;
 	UartHandle.Instance = USART1;
 	UartHandle.Init.BaudRate = 9600;
-	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;	//dataÅ©±â 8ºñÆ®?
+	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;	//dataí¬ê¸° 8ë¹„íŠ¸?
 	UartHandle.Init.StopBits = UART_STOPBITS_1;
 	UartHandle.Init.Parity = UART_PARITY_NONE;
 	UartHandle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 	UartHandle.Init.Mode = UART_MODE_TX_RX;
 	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
 
-	// UART ±¸¼ºÁ¤º¸¸¦ UartHandle¿¡ ¼³Á¤µÈ °ªÀ¸·Î ÃÊ±âÈ­ ÇÔ
+	// UART êµ¬ì„±ì •ë³´ë¥¼ UartHandleì— ì„¤ì •ëœ ê°’ìœ¼ë¡œ ì´ˆê¸°í™” í•¨
 	HAL_UART_Init(&UartHandle);
 }
 void LD_Config(){
@@ -93,15 +93,15 @@ int main(int argc, char* argv[]) {
 	UART_config();
 	LD_Config();
 	MOTOR_Config();
-	// TxBuffer¿¡ ÀúÀåµÇ¾î ÀÖ´Â ³»¿ëÀ» PC·Î º¸³½´Ù.
+	// TxBufferì— ì €ì¥ë˜ì–´ ìˆëŠ” ë‚´ìš©ì„ PCë¡œ ë³´ë‚¸ë‹¤.
 	HAL_UART_Transmit(&UartHandle, (uint8_t*) TxBuffer, TxBufferSize, 0xFFFF);
 
 	while (1) {
-		// ¹ŞÀº µ¥ÀÌÅÍ¸¦ RxBuffer¿¡ ´ã´Â´Ù.
+		// ë°›ì€ ë°ì´í„°ë¥¼ RxBufferì— ë‹´ëŠ”ë‹¤.
 		if (HAL_UART_Receive(&UartHandle, (uint8_t*) RxBuffer, 2, 200)== HAL_OK) {
 			RxBuffer[2] = '\n';
 			RxBuffer[3] = '\r';
-			// RxBuffer¿¡ ÀúÀåµÇ¾î ÀÖ´Â ³»¿ëÀ» UART·Î º¸³½´Ù.
+			// RxBufferì— ì €ì¥ë˜ì–´ ìˆëŠ” ë‚´ìš©ì„ UARTë¡œ ë³´ë‚¸ë‹¤.
 			HAL_UART_Transmit(&UartHandle, (uint8_t*) RxBuffer, 4, 5);
 			if(RxBuffer[0]=='L'){
 				switch (RxBuffer[1]) {
