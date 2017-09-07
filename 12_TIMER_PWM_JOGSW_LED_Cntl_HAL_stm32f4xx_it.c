@@ -65,9 +65,9 @@
  * @param  None
  * @retval None
  */
-// TIM ŸÚÅÍ·´Æ® ISRÀ» À§ÇÑ TimHandler º¯¼ö¸¦ ¿ÜºÎÁ¤ÀÇ º¯¼ö·Î ¼±¾ğ
+// TIM ÂŸæ°‘åº«ëŠ  ISRì„ ìœ„í•œ TimHandler ë³€ìˆ˜ë¥¼ ì™¸ë¶€ì •ì˜ ë³€ìˆ˜ë¡œ ì„ ì–¸
 extern TIM_HandleTypeDef TimHandle;
-/* ±âº» ¿¹¿Ü Ã³¸® ÇÚµé·¯ ÇÔ¼ö ±¸Çö */
+/* ê¸°ë³¸ ì˜ˆì™¸ ì²˜ë¦¬ í•¸ë“¤ëŸ¬ í•¨ìˆ˜ êµ¬í˜„ */
 
 void NMI_Handler(void) {
 }
@@ -170,10 +170,10 @@ void EXTI1_IRQHandler(){
 void EXTI2_IRQHandler(){
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
 }
-/* Å¸ÀÌ¸Ó ŸÚÅÍ·´Æ® Ã³¸® ÇÚµé·¯ ÇÔ¼ö ±¸Çö */
-void TIM2_IRQHandler(void) // TIM2_IRQHandler Ãß°¡
+/* íƒ€ì´ë¨¸ ÂŸæ°‘åº«ëŠ  ì²˜ë¦¬ í•¸ë“¤ëŸ¬ í•¨ìˆ˜ êµ¬í˜„ */
+void TIM2_IRQHandler(void) // TIM2_IRQHandler ì¶”ê°€
 {
-	HAL_TIM_IRQHandler(&TimHandle); // TIM ŸÚÅÍ·´Æ® Callback ÇÔ¼ö
+	HAL_TIM_IRQHandler(&TimHandle); // TIM ÂŸæ°‘åº«ëŠ  Callback í•¨ìˆ˜
 }
 /**
  * @brief  This function handles PPP interrupt request.
