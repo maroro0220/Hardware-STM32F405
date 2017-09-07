@@ -1,5 +1,5 @@
 /*
- * This file is part of the ÂµOS++ distribution.
+ * This file is part of the ì¨‰OS++ distribution.
  *   (https://github.com/micro-os-plus)
  * Copyright (c) 2014 Liviu Ionescu.
  *
@@ -52,14 +52,14 @@
 GPIO_InitTypeDef GPIO_Init_Struct;
 ADC_HandleTypeDef AdcHandler;
 ADC_ChannelConfTypeDef sConfig;
-/*Áö¿¬·çÆ¾*/
-static void ms_delay_int_count(volatile unsigned int nTime) // ms Áö¿¬
+/*ì§€ì—°ë£¨í‹´*/
+static void ms_delay_int_count(volatile unsigned int nTime) // ms ì§€ì—°
 {
 	nTime = (nTime * 14000);
 	for (; nTime > 0; nTime--)
 		;
 }
-static void us_delay_int_count(volatile unsigned int nTime) // us Áö¿¬
+static void us_delay_int_count(volatile unsigned int nTime) // us ì§€ì—°
 {
 	nTime = (nTime * 12);
 	for (; nTime > 0; nTime--)
@@ -76,30 +76,30 @@ void LED_Config() {
 }
 void ADC_Config() {
 	__HAL_RCC_ADC1_CLK_ENABLE()
-	; // ADC Å¬·° ÃR¼ºÈ­
+	; // ADC í´ëŸ­ Rì„±í™”
 	__HAL_RCC_GPIOA_CLK_ENABLE()
-	; // ADC ÇÉÀ¸·Î »ç¿ëÇÒ GPIOx ÃR¼ºÈ­(VR:PA4)
-	GPIO_Init_Struct.Pin = GPIO_PIN_4; // GPIO¿¡¼­ »ç¿ëÇÒ PIN ¼³Á¤
-	GPIO_Init_Struct.Mode = GPIO_MODE_ANALOG; // Input Analog Mode ¸ğµå
+	; // ADC í•€ìœ¼ë¡œ ì‚¬ìš©í•  GPIOx Rì„±í™”(VR:PA4)
+	GPIO_Init_Struct.Pin = GPIO_PIN_4; // GPIOì—ì„œ ì‚¬ìš©í•  PIN ì„¤ì •
+	GPIO_Init_Struct.Mode = GPIO_MODE_ANALOG; // Input Analog Mode ëª¨ë“œ
 	HAL_GPIO_Init(GPIOA, &GPIO_Init_Struct);
-	AdcHandler.Instance = ADC1; // ADC1 ¼³Á¤
+	AdcHandler.Instance = ADC1; // ADC1 ì„¤ì •
 	AdcHandler.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2; // ADC clock prescaler
 	AdcHandler.Init.Resolution = ADC_RESOLUTION_12B; // ADC resolution
 	AdcHandler.Init.DataAlign = ADC_DATAALIGN_RIGHT; // ADC data alignment
-	AdcHandler.Init.ScanConvMode = DISABLE; // ADC scan ¸ğµå ºñÃR¼ºÈ­
-	AdcHandler.Init.ContinuousConvMode = ENABLE; // ADC ¿¬¼Ó ¸ğµå ÃR¼ºÈ­
-	AdcHandler.Init.NbrOfConversion = 1; // ADC º¯ÃQ °³¼ö ¼³Á¤
-	AdcHandler.Init.ExternalTrigConv = ADC_SOFTWARE_START; // ADC ¿ÜºÎ Æ®¸®°Å OFF
-	HAL_ADC_Init(&AdcHandler); // ADC¸¦ ¼³Á¤µÈ °ªÀ¸·Î ÃÊ±âÈ­
-	sConfig.Channel = ADC_CHANNEL_4; // ADC Ã¤³Î ¼³Á¤(PA´Â Ã¤³Î 4¹ø)
-	sConfig.Rank = 1; // ADC Ã¤³Î ¼øÀ§ ¼³Á¤
-	sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES; // ADC »ùÇÃ¸µ Å¸ÀÓ ¼³Á¤(3Å¬·°)
-	HAL_ADC_ConfigChannel(&AdcHandler, &sConfig); // Ã¤³Î ¼³Á¤
+	AdcHandler.Init.ScanConvMode = DISABLE; // ADC scan ëª¨ë“œ ë¹„Rì„±í™”
+	AdcHandler.Init.ContinuousConvMode = ENABLE; // ADC ì—°ì† ëª¨ë“œ Rì„±í™”
+	AdcHandler.Init.NbrOfConversion = 1; // ADC ë³€Q ê°œìˆ˜ ì„¤ì •
+	AdcHandler.Init.ExternalTrigConv = ADC_SOFTWARE_START; // ADC ì™¸ë¶€ íŠ¸ë¦¬ê±° OFF
+	HAL_ADC_Init(&AdcHandler); // ADCë¥¼ ì„¤ì •ëœ ê°’ìœ¼ë¡œ ì´ˆê¸°í™”
+	sConfig.Channel = ADC_CHANNEL_4; // ADC ì±„ë„ ì„¤ì •(PAëŠ” ì±„ë„ 4ë²ˆ)
+	sConfig.Rank = 1; // ADC ì±„ë„ ìˆœìœ„ ì„¤ì •
+	sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES; // ADC ìƒ˜í”Œë§ íƒ€ì„ ì„¤ì •(3í´ëŸ­)
+	HAL_ADC_ConfigChannel(&AdcHandler, &sConfig); // ì±„ë„ ì„¤ì •
 }
 int adc_value;
 void CLCD_Config() {
 
-	// CLCD¿ë GPIO (GPIOC)ÀÇ ÃÊ±â¼³Á¤À» ÇÔ
+	// CLCDìš© GPIO (GPIOC)ì˜ ì´ˆê¸°ì„¤ì •ì„ í•¨
 	__HAL_RCC_GPIOC_CLK_ENABLE()
 	;
 	// CLCD_RS(PC8), CLCD_E(PC9, DATA 4~5(PC12~15)
@@ -133,12 +133,12 @@ void CLCD_write(unsigned char rs, char data) {
 	us_delay_int_count(2);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET); // CLCD_E = 0
 	ms_delay_int_count(2);
-	//½Ã°£ ¾ö¼ö. Ã³¸®ÇÏ´Âµ¥ ÇÊ¿äÇÑ ½Ã°£
+	//ì‹œê°„ ì—„ìˆ˜. ì²˜ë¦¬í•˜ëŠ”ë° í•„ìš”í•œ ì‹œê°„
 }
 void CLCD_init() {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
-	CLCD_write(0, 0x33); // 4ºñÆ® ¼³Á¤ Æ¯¼ö ¸í·É
-	CLCD_write(0, 0x32); // 4ºñÆ® ¼³Á¤ Æ¯¼ö ¸í·É
+	CLCD_write(0, 0x33); // 4ë¹„íŠ¸ ì„¤ì • íŠ¹ìˆ˜ ëª…ë ¹
+	CLCD_write(0, 0x32); // 4ë¹„íŠ¸ ì„¤ì • íŠ¹ìˆ˜ ëª…ë ¹
 	CLCD_write(0, 0x28); // _set_function
 	CLCD_write(0, 0x0F); // _set_display
 	CLCD_write(0, 0x01); // clcd_clear
@@ -162,14 +162,14 @@ int main(int argc, char* argv[]) {
 	clcd_put_string("hi!");
 	// Infinite loop
 	while (1) {
-		// Polling ¹æ½ÄÀ¸·Î ADC º¯ÃQ ¼öÇà
-		HAL_ADC_Start(&AdcHandler); // ADC¸¦ µ¿ÀÛ½ÃÅ´
-		HAL_ADC_PollForConversion(&AdcHandler, 10); // º¯ÃQÀÌ ¿Ï·áµÉ ¶§±îÁö ´ë±â
-		adc_value = HAL_ADC_GetValue(&AdcHandler); // ADC º¯ÃQ °á°ú °ªÀ» ÀúÀå
-		// º¯ÃQ °á°ú°ªÀ» ÀÌ¿ëÇÏ¿© LEDÀÇ ÁÖ±â¸¦ º¯°æ
+		// Polling ë°©ì‹ìœ¼ë¡œ ADC ë³€Q ìˆ˜í–‰
+		HAL_ADC_Start(&AdcHandler); // ADCë¥¼ ë™ì‘ì‹œí‚´
+		HAL_ADC_PollForConversion(&AdcHandler, 10); // ë³€Qì´ ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
+		adc_value = HAL_ADC_GetValue(&AdcHandler); // ADC ë³€Q ê²°ê³¼ ê°’ì„ ì €ì¥
+		// ë³€Q ê²°ê³¼ê°’ì„ ì´ìš©í•˜ì—¬ LEDì˜ ì£¼ê¸°ë¥¼ ë³€ê²½
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, 1);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 1);
-		us_delay_int_count(adc_value);		//ÁÖ±â Á¶ÀıÇØ¼­ ¹à±â Á¶ÀıÇÏ·Á°í
+		us_delay_int_count(adc_value);		//ì£¼ê¸° ì¡°ì ˆí•´ì„œ ë°ê¸° ì¡°ì ˆí•˜ë ¤ê³ 
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, 0);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 0);
 		us_delay_int_count(3000);
