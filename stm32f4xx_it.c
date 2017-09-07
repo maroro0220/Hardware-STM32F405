@@ -66,7 +66,7 @@
  * @retval None
  */
 // TIM 읶터럽트 ISR을 위한 TimHandler 변수를 외부정의 변수로 선언
-extern TIM_HandleTypeDef TimHandle2,TimHandle3;
+extern TIM_HandleTypeDef TimHandle;
 /* 기본 예외 처리 핸들러 함수 구현 */
 
 void NMI_Handler(void) {
@@ -163,25 +163,10 @@ void SysTick_Handler(void) {
  */
 
 /* 타이머 읶터럽트 처리 핸들러 함수 구현 */
-void EXTI2_IRQHandler() {
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
-}
-void EXTI0_IRQHandler() {
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
-}
-void EXTI1_IRQHandler() {
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
-}
-void EXTI15_10_IRQHandler() {
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12); //Left
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13); //Right
-}
-void TIM2_IRQHandler() {
-	HAL_TIM_IRQHandler(&TimHandle2);
-}
+
 void TIM3_IRQHandler(void) // TIM2_IRQHandler 추가
 {
-	HAL_TIM_IRQHandler(&TimHandle3); // TIM 읶터럽트 Callback 함수
+	HAL_TIM_IRQHandler(&TimHandle); // TIM 읶터럽트 Callback 함수
 }
 /**
  * @brief  This function handles PPP interrupt request.
